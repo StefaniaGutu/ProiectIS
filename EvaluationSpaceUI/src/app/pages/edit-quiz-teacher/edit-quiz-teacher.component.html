@@ -1,0 +1,228 @@
+<div class="container">
+    <h2 class="page-title">{{isDisabled ? 'View quiz' : 'Edit quiz'}}</h2>
+    <mat-card>
+
+        <form [formGroup]="quizForm" (ngSubmit)="onSubmit()" autocomplete="off">
+            <mat-form-field class="full-width">
+                <input formControlName="quizTitle" matInput placeholder="Quiz Title" maxlength="50" [required]="true">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input formControlName="startTime" matInput placeholder="Start Time" type="datetime-local"
+                    name="datetime" [required]="true" [min]="today">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Previous available classrooms" [value]="classroomsValue" [disabled]="true">
+            </mat-form-field>
+
+            <mat-form-field class="full-width" *ngIf="!isDisabled">
+                <mat-select formControlName="classrooms" placeholder="Classrooms" multiple>
+                    <mat-option *ngFor="let classroom of allClassrooms" [value]="classroom.value">
+                        {{classroom.text}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class="survey-options">
+                <div formArrayName="quizQuestions" class="poll-options">
+                    <h3 class="list-title">{{isDisabled ? 'View quiz questions' : 'Edit quiz questions'}}</h3>
+
+
+                    <ol class="list-style">
+                        <li *ngFor="let questionCtrl of surveyQuestions; let i = index">
+                            <div [formGroupName]="i">
+                                <div>
+                                    <mat-form-field class="full-width">
+                                        <input formControlName="questionText" maxlength="200" matInput
+                                            placeholder="Question text" [required]="true">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width">
+                                        <input formControlName="score" matInput placeholder="Question Score"
+                                            [required]="true" type="number" min="0">
+                                        <mat-error>Please enter a valid number</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width">
+                                        <mat-select formControlName="questionType" placeholder="Question type"
+                                            [(value)]="selectedOption[i]"
+                                            (selectionChange)="onSelectQuestionType(selectedOption[i], i)"
+                                            [required]="true">
+                                            <mat-option *ngFor="let type of questions" [value]="type.viewValue">
+                                                {{type.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <div formGroupName="questionAnswers" [ngSwitch]="selectedOption[i]">
+                                        <div *ngSwitchCase="'Single Choice'">
+                                            <div *ngIf="questionCtrl.controls.questionAnswers.controls.answers">
+                                                <ul class="question-type" formArrayName="answers">
+                                                    <li
+                                                        *ngFor="let optionCtrl of questionCtrl.controls.questionAnswers.controls.answers.controls let j = index">
+                                                        <div [formGroupName]="j">
+
+                                                            <mat-form-field>
+
+                                                                <mat-radio-button class="example-margin"
+                                                                    [disabled]="isDisabled"
+                                                                    (change)="putAnswer($event, j, i)"
+                                                                    [checked]="checkCorrect(j, i)"
+                                                                    name="single{{i}}"><input
+                                                                        style="padding-left: 10px;"
+                                                                        formControlName="optionText" matInput
+                                                                        maxlength="100"
+                                                                        [required]="true"></mat-radio-button>
+
+                                                            </mat-form-field>
+
+                                                            <button mat-raised-button *ngIf="j>=2 && !isDisabled"
+                                                                (click)="removeOption(i,j)" color="warn">
+                                                                X
+                                                            </button>
+
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <button mat-raised-button type="button" (click)="addOption(i)"
+                                                    *ngIf="!isDisabled" class="mat-sm-button add-option-btn"
+                                                    color="accent"> Add option
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                        <div *ngSwitchCase="'True/False'">
+                                            <div *ngIf="questionCtrl.controls.questionAnswers.controls.answers">
+                                                <ul class="question-type" formArrayName="answers">
+                                                    <li>
+                                                        <div [formGroupName]="0">
+
+                                                            <mat-form-field>
+                                                                <mat-radio-button class="example-margin"
+                                                                    [disabled]="isDisabled"
+                                                                    (change)="putAnswer($event, 0, i)"
+                                                                    [checked]="checkCorrect(0, i)"
+                                                                    name="true{{i}}"><input
+                                                                        formControlName="optionText1"
+                                                                        matInput></mat-radio-button>
+
+                                                            </mat-form-field>
+
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div [formGroupName]="1">
+
+                                                            <mat-form-field>
+                                                                <mat-radio-button class="example-margin"
+                                                                    (change)="putAnswer($event, 1, i)"
+                                                                    [checked]="checkCorrect(1, i)" name="true"><input
+                                                                        formControlName="optionText2"
+                                                                        matInput></mat-radio-button>
+
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div *ngSwitchCase="'Gap Filling'">
+                                            <div *ngIf="questionCtrl.controls.questionAnswers.controls.answers">
+                                                <ul class="question-type" formArrayName="answers">
+                                                    <li
+                                                        *ngFor="let optionCtrl of questionCtrl.controls.questionAnswers.controls.answers.controls let j = index">
+                                                        <div [formGroupName]="j">
+
+                                                            <mat-form-field>
+
+                                                                <mat-radio-button class="example-margin"
+                                                                    [disabled]="isDisabled"
+                                                                    (change)="putAnswer($event, j, i)"
+                                                                    [checked]="checkCorrect(j, i)" name="gf{{i}}"><input
+                                                                        style="padding-left: 10px;"
+                                                                        formControlName="optionText" matInput
+                                                                        maxlength="100"
+                                                                        [required]="true"></mat-radio-button>
+
+                                                            </mat-form-field>
+
+                                                            <button mat-raised-button *ngIf="j>=2 && !isDisabled"
+                                                                (click)="removeOption(i,j)" color="warn">
+                                                                X
+                                                            </button>
+
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <button mat-raised-button type="button" (click)="addOption(i)"
+                                                    class="mat-sm-button add-option-btn" color="accent"
+                                                    *ngIf="!isDisabled"> Add option
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                        <div *ngSwitchCase="'Multiple Choice'">
+                                            <div *ngIf="questionCtrl.controls.questionAnswers.controls.answers">
+                                                <ul class="question-type" formArrayName="answers">
+                                                    <li
+                                                        *ngFor="let optionCtrl of questionCtrl.controls.questionAnswers.controls.answers.controls let j = index">
+                                                        <div [formGroupName]="j">
+
+                                                            <mat-form-field>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [disabled]="isDisabled"
+                                                                    (change)="putAnswerMC($event, j, i)"
+                                                                    [checked]="checkCorrect(j, i)"><input
+                                                                        style="padding-left: 10px;"
+                                                                        formControlName="optionText" matInput
+                                                                        maxlength="100"
+                                                                        [required]="true"></mat-checkbox>
+                                                            </mat-form-field>
+
+                                                            <button mat-raised-button *ngIf="j>=2 && !isDisabled"
+                                                                (click)="removeOption(i,j)" color="warn">
+                                                                X
+                                                            </button>
+
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <button mat-raised-button type="button" (click)="addOption(i)"
+                                                    class="mat-sm-button add-option-btn" color="accent"
+                                                    *ngIf="!isDisabled"> Add option
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <button *ngIf="i>0 && !isDisabled" mat-mini-fab color="warn" type="button"
+                                    (click)="onRemoveQuestion(i)" class="poll-remove-btn">
+                                    X
+                                </button>
+                            </div>
+                        </li>
+                    </ol>
+                    <div>
+                        <button type="button" mat-raised-button (click)="onAddQuestion()" *ngIf="!isDisabled">
+                            Add Question
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="button-row" *ngIf="!isDisabled">
+                <button class="full-width" color="primary" type="submit" mat-raised-button
+                    [disabled]="!quizForm.valid || !checkedAllAnswers()">
+                    <span>Edit Quiz</span>
+                </button>
+            </div>
+        </form>
+    </mat-card>
+</div>

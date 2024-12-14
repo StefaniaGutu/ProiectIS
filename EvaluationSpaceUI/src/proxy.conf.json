@@ -1,0 +1,9 @@
+{
+  "/basePath": {
+    "target": "https://localhost:7247/api",
+    "secure": false,
+    "pathRewrite": {
+      "^/basePath": ""
+    }
+  }
+}

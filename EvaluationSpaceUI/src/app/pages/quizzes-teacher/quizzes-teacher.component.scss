@@ -1,0 +1,38 @@
+.container {
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+h2 {
+  margin-bottom: 40px;
+}
+
+.example-card {
+  border-radius: 25px;
+  margin: 10px;
+  background-color: rgba(155, 221, 255, 1);
+}
+
+mat-slide-toggle {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  margin-right: 9px;
+}
+
+.column {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+.empty {
+  font-size: 20px;
+}

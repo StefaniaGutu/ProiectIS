@@ -1,0 +1,36 @@
+<div class="container">
+    <h2>Your results</h2>
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="QuizTitle">
+                <th mat-header-cell *matHeaderCellDef> Quiz Title </th>
+                <td mat-cell *matCellDef="let element"> {{element.quizTitle}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="Teacher">
+                <th mat-header-cell *matHeaderCellDef> Teacher </th>
+                <td mat-cell *matCellDef="let element"> {{element.teacherName}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="Score">
+                <th mat-header-cell *matHeaderCellDef> Score </th>
+                <td mat-cell *matCellDef="let element"> {{element.score!==null ? element.score : 'Not available yet'}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="PossibleScore">
+                <th mat-header-cell *matHeaderCellDef> Possible score </th>
+                <td mat-cell *matCellDef="let element"> {{element.totalScore}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons class="paginator">
+        </mat-paginator>
+    </div>
+</div>

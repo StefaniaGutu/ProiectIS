@@ -1,0 +1,27 @@
+<div class="container" *ngIf="colleaguesClassroom && routeUrl==='/classroomStudent'">
+    <h2>Classroom {{ colleaguesClassroom.name }}</h2>
+    <mat-divider class="line"></mat-divider>
+    <mat-list class="people">
+        <mat-list-item *ngFor="let collegue of colleaguesClassroom.colleagues">
+            <mat-icon mat-list-icon>
+                person
+            </mat-icon>
+            <div mat-line>{{collegue.lastName}} {{collegue.firstName}}</div>
+            <div mat-line> {{collegue.email}} </div>
+        </mat-list-item>
+    </mat-list>
+</div>
+
+<div class="container" *ngIf="colleaguesClassroom && routeUrl==='/teachersStudent'">
+    <h2>Your teachers</h2>
+    <mat-divider class="line"></mat-divider>
+    <mat-list class="people">
+        <mat-list-item *ngFor="let teacher of colleaguesClassroom.teachers">
+            <mat-icon mat-list-icon>
+                person
+            </mat-icon>
+            <div mat-line>{{teacher.lastName}} {{teacher.firstName}}</div>
+            <div mat-line> {{teacher.email}} </div>
+        </mat-list-item>
+    </mat-list>
+</div>

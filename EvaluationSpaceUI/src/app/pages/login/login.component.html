@@ -1,0 +1,30 @@
+<div class="container">
+  <div id="titleLogin">
+    <p>Login into account</p>
+  </div>
+  <form [formGroup]="myForm">
+    <input formControlName="email" class="form-control" placeholder="Email"
+      [ngClass]="myForm.controls['email'].errors ? 'is-invalid' : ''" />
+    <small class="text-danger" style="font-size: 15px"
+      *ngIf="myForm.controls['email'].errors?.['required'] && myForm.controls['email'].touched">
+      Email is required.
+    </small>
+    <input formControlName="password" class="form-control" placeholder="Password" type="password" />
+    <small class="text-danger" style="font-size: 15px"
+      *ngIf="myForm.controls['password'].errors?.['required'] && myForm.controls['password'].touched">
+      Password is required.
+    </small>
+  </form>
+  <div class="row">
+    <div class="col">
+      <button type="submit" [disabled]="myForm.status === 'INVALID'" class="btn btn-primary" id="loginButton"
+        (click)="doLogin()">
+        Login
+      </button>
+    </div>
+    <div class="col-10">
+      <p>Don't have an account? Click <a href="register">here to register</a></p>
+    </div>
+  </div>
+  <div class="alert alert-danger" [hidden]="!errorMessage">{{ errorMessage }}</div>
+</div>

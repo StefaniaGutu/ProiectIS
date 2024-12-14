@@ -1,0 +1,16 @@
+body {
+  background: url("assets/images/background.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+* {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.blue-snackbar {
+  background: rgba(155, 221, 255, 1);
+  color: black;
+}

@@ -1,0 +1,28 @@
+<div class="container">
+  <h2 mat-dialog-title>Classroom {{this.data.name}}</h2>
+  <div mat-dialog-content>
+    <div *ngIf="studentsWithoutClassrooms.length !== 0">
+      <p>Choose the students you want to add to this classroom:</p>
+      <div *ngFor="let student of studentsWithoutClassrooms let j = index">
+        <div class="j">
+          <mat-checkbox class="example-margin" (change)="putAnswerMC($event, j)">{{student.lastName}}
+            {{student.firstName}}
+            - {{student.email}}</mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <p *ngIf="studentsWithoutClassrooms.length === 0">There are no students without classrooms</p>
+  </div>
+  <div mat-dialog-actions class="buttons">
+    <div class="row">
+      <div class="column col1">
+        <button mat-raised-button color="primary" (click)=" onNoClick()">Close</button>
+      </div>
+      <div class="column col2">
+        <button mat-raised-button color="accent" [mat-dialog-close]="this.studentsAdded" (click)="addStudents()"
+          *ngIf="studentsWithoutClassrooms.length !== 0">Add Students
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

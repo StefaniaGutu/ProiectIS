@@ -1,0 +1,44 @@
+<div class="container" *ngIf="quizToTake">
+  <h2 class="page-title"><b><i>{{quizToTake.title}}</i></b></h2>
+  <div class="poll-options">
+    <h3 class="list-title"><i>Answer the next questions:</i></h3>
+    <ol class="list-style">
+        <li *ngFor="let questionCtrl of quizToTake.questions; let i = index">
+          <div class="i">
+            <div>
+              <p><b><i> {{questionCtrl.questionText}} </i></b></p>
+              <div class="questionAnswers"
+                   *ngIf="questionCtrl.idQuestionType === 1 || questionCtrl.idQuestionType === 3 || questionCtrl.idQuestionType === 4">
+                <ul class="question-type">
+                  <li
+                    *ngFor="let optionCtrl of questionCtrl.answers let j = index">
+                    <div class="j">
+                      <mat-radio-button class="example-margin"
+                                        name="single{{i}}" (change)="putAnswer($event, j, i)">{{optionCtrl.answerText}}</mat-radio-button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="questionAnswers" *ngIf="questionCtrl.idQuestionType === 2">
+                <ul class="question-type">
+                  <li
+                    *ngFor="let optionCtrl of questionCtrl.answers let j = index">
+                    <div class="j">
+                      <mat-checkbox class="example-margin" (change)="putAnswerMC($event, j, i)">{{optionCtrl.answerText}}</mat-checkbox>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <p class="score" style="display: flex; justify-content: flex-end;">{{questionCtrl.score}}
+                /{{quizToTake.totalScore}}</p>
+            </div>
+          </div>
+        </li>
+    </ol>
+  </div>
+  <div class="button-row">
+    <button class="full-width" color="primary" type="submit" mat-raised-button [disabled]="!checkedAllAnswers()" (click)="submitStudentQuiz()">
+      <span>Submit Quiz</span>
+    </button>
+  </div>
+</div>

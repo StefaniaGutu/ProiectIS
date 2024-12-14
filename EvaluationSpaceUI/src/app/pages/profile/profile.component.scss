@@ -1,0 +1,44 @@
+.container {
+  width: 650px;
+  height: 550px;
+  background-color: rgba(155, 221, 255, 0.6);
+  border-radius: 50px;
+  margin-top: 100px;
+  margin-left: 50px;
+  font-size: 20px;
+  padding: 35px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.row {
+  margin-top: 10px;
+}
+
+#titleProfile {
+  padding-bottom: 5px;
+  font-size: 30px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  margin-left: 50px;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.edit {
+  margin-top: 25px;
+}
+
+.btn {
+  font-size: 18px;
+}
+
+.deleteProfile {
+  margin-left: 40px;
+}

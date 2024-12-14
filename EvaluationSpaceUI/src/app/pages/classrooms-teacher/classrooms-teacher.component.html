@@ -1,0 +1,29 @@
+<div class="container" *ngIf="teacherClassrooms">
+  <h2>My Classrooms</h2>
+  <mat-divider class="line"></mat-divider>
+  <div class = "classrooms"*ngFor="let classroom of teacherClassrooms">
+    <mat-accordion>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Classroom {{classroom.name}}
+          </mat-panel-title>
+          <mat-panel-description>
+            <button type="button" class="addStudent" mat-raised-button (click)="onAddStudent(classroom)" >
+              Add Student
+            </button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p *ngIf="classroom.students.length === 0">This classroom does not have students.</p>
+        <div class="students" *ngFor="let student of classroom.students">
+          <div class="row">
+            <p class="column col1">{{student.lastName}} {{student.firstName}} - {{student.email}}</p>
+            <button type="button" class="column btn btn-danger col2" (click)="openDialog(classroom.id,classroom.name, student.id!)">
+              Delete
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
