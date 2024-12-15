@@ -20,9 +20,26 @@ namespace EvaluationSpaceAPI.Controllers
         [Route("UpoloadZip")]
         public async Task<IActionResult> UpoloadZip(IFormFile zip, [FromForm] string name, [FromForm] string programmingLanguage)
         {
-            var x = await this._reportService.UploadZipToDolos(zip, name, programmingLanguage);
-            return Ok(x);
+            var reportId = await this._reportService.UploadZipToDolos(zip, name, programmingLanguage);
+            return Ok(reportId);
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("GetReport/{reportId}")]
+        public async Task<IActionResult> GetReport([FromRoute] string reportId)
+        {
+            var report = await this._reportService.GetReportJson(reportId);
+            return Ok(report);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetReportSimilarity/{reportId}")]
+        public async Task<IActionResult> GetReportSimilarity([FromRoute] string reportId)
+        {
+            var similarityCSV = await this._reportService.GetReportSimilarityCSV(reportId);
+            return Ok(similarityCSV);
+        }
     }
 }
