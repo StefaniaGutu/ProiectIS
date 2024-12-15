@@ -17,10 +17,12 @@
             Visibility</mat-slide-toggle>
           <div class="column">
             <button type="button" class="btn btn-primary" (click)="editQuiz(quiz.id, quiz.startTime)"
-              *ngIf="quizStarted(quiz.startTime)">View</button>
+              *ngIf="quizStarted(quiz.startTime)"><mat-icon>remove_red_eye</mat-icon>View</button>
             <button type="button" class="btn btn-primary" (click)="editQuiz(quiz.id, quiz.startTime)"
-              *ngIf="!quizStarted(quiz.startTime)">Edit</button>
-            <button type="button" class="btn btn-danger" (click)="openDialog(quiz.id)">Delete</button>
+              *ngIf="!quizStarted(quiz.startTime)">
+              <mat-icon>edit</mat-icon> Edit</button>
+            <button type="button" class="btn btn-danger" (click)="openDialog(quiz.id)">
+              <mat-icon>delete</mat-icon> Delete</button>
           </div>
         </mat-card-actions>
       </mat-card>

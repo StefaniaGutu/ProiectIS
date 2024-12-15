@@ -43,6 +43,7 @@ import { DialogAddStudentComponent } from './components/dialog-add-student/dialo
 import { ResultsTeacherComponent } from './pages/results-teacher/results-teacher.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AnalyseZipComponent } from './pages/analyse-zip/analyse-zip.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ResultsStudentComponent,
     ClassroomsTeacherComponent,
     DialogAddStudentComponent,
-    ResultsTeacherComponent
+    ResultsTeacherComponent,
+    AnalyseZipComponent
   ],
   imports: [
     BrowserModule,

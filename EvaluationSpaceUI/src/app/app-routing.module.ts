@@ -15,6 +15,7 @@ import { ResultsTeacherComponent } from './pages/results-teacher/results-teacher
 import { AuthGuard } from './guards/auth.guard';
 import { AuthTeacherGuard } from './guards/auth-teacher.guard';
 import { AuthStudentGuard } from './guards/auth-student.guard';
+import {AnalyseZipComponent} from "./pages/analyse-zip/analyse-zip.component";
 
 const routes: Routes = [
   {
@@ -42,6 +43,11 @@ const routes: Routes = [
   {
     path: 'quizTeacher',
     component: QuizTeacherComponent,
+    canActivate: [AuthGuard, AuthTeacherGuard]
+  },
+  {
+    path: 'analyseSubmissions',
+    component: AnalyseZipComponent,
     canActivate: [AuthGuard, AuthTeacherGuard]
   },
   {

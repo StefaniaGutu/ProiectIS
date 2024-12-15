@@ -1,0 +1,38 @@
+<div class="container">
+  <h2>Analyze Student Submissions</h2>
+  <p class="description-analyse">
+    You can upload a ZIP file containing your code files. The ZIP file name should clearly represent the project (e.g.,
+    'project_name.zip'). Select the programming language from the dropdown menu to ensure accurate processing. Only .zip
+    files are supported.
+  </p>
+
+  <div class="inputs-submit">
+    <form class="example-form" [formGroup]="analysisForm" (ngSubmit)="onSubmit()">
+      <div class="file-input row">
+        <input id="fileUpload" type="file" (change)="onFileSelect($event)" accept=".zip" required />
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width2">
+            <mat-label>Name</mat-label>
+            <input formControlName="zipName" matInput placeholder="Enter name">
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select formControlName="language" placeholder="Language" class="full-width">
+                <mat-option *ngFor="let language of allLanguages" [value]="language">
+                  {{language}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <button class="btn btn-primary row" color="primary" type="submit" mat-raised-button [disabled]="!selectedFile || !analysisForm.valid" (click)="analyseSubmissions()">
+      <span>Analyse submissions</span>
+    </button>
+  </div>
+</div>

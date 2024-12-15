@@ -1,0 +1,47 @@
+
+.container {
+  margin-top: 120px;
+  margin-bottom: 50px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.description-analyse{
+  width: 55%;
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.inputs-submit {
+  display: flex;
+  flex-direction: column; /* Stack rows vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  //height: 100vh; /* Full viewport height */
+  width: 55%;
+}
+
+/* Individual rows styling (optional) */
+.row {
+  margin: 10px 0; /* Add some space between rows */
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-width2 {
+  width: 100%;
+  margin-left: 10px;
+}
+
+.file-input {
+  margin-left: 10px;
+}
+
+.row{
+  margin-bottom: 20px;
+}
+
