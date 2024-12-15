@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using EvaluationSpaceAPI.Services.TeacherQuizzes;
 using EvaluationSpaceAPI.Services.StudentQuizzes;
+using EvaluationSpaceAPI.Services.Reports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IClassroomRepository, ClassroomRepository>();
 builder.Services.AddScoped<IClassroomService, ClassroomService>();
 builder.Services.AddScoped<IQuizzesRepository, QuizzesRepository>();
@@ -80,6 +82,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
