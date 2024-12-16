@@ -1,12 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ViewUser} from "../../models/view-user";
-import {MatDialog} from "@angular/material/dialog";
-import {ProfileService} from "../../services/profile.service";
 import {AuthService} from "../../services/auth.service";
-import {Classroom} from "../../models/classroom";
 import {AnalyseZipService} from "../../services/analyse-zip.service";
-import {ZipDetails} from "../../models/zipDetails";
 
 @Component({
   selector: 'app-analyse-zip',
@@ -32,7 +27,6 @@ export class AnalyseZipComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("djhbgkjfn")
     this.analyseSubmissions();
   }
 
@@ -50,16 +44,16 @@ export class AnalyseZipComponent implements OnInit {
   }
 
   analyseSubmissions(): void {
-    console.log("jhgknjgn")
     if (!this.analysisForm.valid || !this.selectedFile) {
-      console.log("aici")
       return;
     }
 
-    let formData = this.analysisForm.value;
-    let zipDetails = new ZipDetails(formData.file, formData.name, formData.language)
-    console.log(zipDetails)
-    this.analyseZipService.analyseZip(zipDetails).subscribe(res => {
+    const formData = new FormData();
+    formData.append('zip', this.selectedFile as Blob, this.selectedFile?.name);
+    formData.append('programmingLanguage', this.analysisForm.get('language')?.value);
+    formData.append('name', this.analysisForm.get('zipName')?.value);
+
+    this.analyseZipService.analyseZip(formData).subscribe(res => {
       console.log(res)
     });
   }

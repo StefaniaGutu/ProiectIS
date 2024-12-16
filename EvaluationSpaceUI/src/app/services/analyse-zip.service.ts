@@ -1,7 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpResponse} from "@angular/common/http";
-import {ZipDetails} from "../models/zipDetails";
-import {Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +8,8 @@ export class AnalyseZipService {
 
   constructor(private http: HttpClient) { }
 
-  analyseZip(zipDetails: ZipDetails){
-    return this.http.post("UpoloadZip", {
-      "zip" : zipDetails.zipFile,
-      "name" : zipDetails.name,
-      "programmingLanguage" : zipDetails.language
-    }, {
+  analyseZip(zipDetails: FormData){
+    return this.http.post("basePath/Reports/UpoloadZip", zipDetails, {
       observe: 'response',
       responseType: 'text' as 'json'
     })
