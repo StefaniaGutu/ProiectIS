@@ -21,7 +21,8 @@ namespace EvaluationSpaceAPI.Controllers
         public async Task<IActionResult> UpoloadZip(IFormFile zip, [FromForm] string name, [FromForm] string programmingLanguage)
         {
             var reportId = await this._reportService.UploadZipToDolos(zip, name, programmingLanguage);
-            return Ok(reportId);
+            var similarities = await this._reportService.GetReportSimilarityCSV(reportId);
+            return Ok(similarities);
         }
 
         [HttpGet]

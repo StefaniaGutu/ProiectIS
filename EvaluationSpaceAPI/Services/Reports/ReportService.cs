@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using EvaluationSpaceAPI.DTOs;
 using Microsoft.DotNet.MSIdentity.Shared;
 using System.Formats.Asn1;
 using System.Globalization;
@@ -43,7 +44,7 @@ namespace EvaluationSpaceAPI.Services.Reports
             }
         }
 
-        public async Task<string> GetReportSimilarityCSV(string reportId)
+        public async Task<SimilarityDTO[]> GetReportSimilarityCSV(string reportId)
         {
             var url = $"http://localhost:3000/reports/{reportId}/data/pairs.csv";
 
@@ -51,7 +52,7 @@ namespace EvaluationSpaceAPI.Services.Reports
             {
                 // Create an HttpClient instance
                 var client = _httpClientFactory.CreateClient();
-
+                Thread.Sleep(10000);
                 // Send a GET request to fetch the CSV file
                 var response = await client.GetAsync(url);
                 response.EnsureSuccessStatusCode(); // Ensures that the response is successful
@@ -63,22 +64,29 @@ namespace EvaluationSpaceAPI.Services.Reports
                 // Read the CSV file records
                 var records = csvReader.GetRecords<dynamic>().ToList();
 
-                var result = string.Empty;
+                List<SimilarityDTO> result = new List<SimilarityDTO>();
 
                 foreach (var record in records)
                 {
                     // Assuming the field names in the CSV are 'leftFilePath' and 'similarity'
                     var leftFilePath = record.leftFilePath;
+                    var rightFilePath = record.rightFilePath;
                     var similarity = record.similarity;
 
                     // Extract just the file name from the full path
-                    var fileName = Path.GetFileName(leftFilePath);
+                    var leftfileName = Path.GetFileName(leftFilePath);
+                    var rightfileName = Path.GetFileName(rightFilePath);
 
-                    // Concatenate or process as needed
-                    result += $"File: {fileName}, Similarity: {similarity}\n";
+                    var x = new SimilarityDTO()
+                    {
+                        LeftFileName = leftfileName,
+                        RightFileName = rightfileName,
+                        Similarity = Math.Round(Double.Parse(similarity)*100, 2) 
+                    };
+                    result.Add(x);
                 }
 
-                return result;
+                return result.ToArray();
             }
             catch (HttpRequestException ex)
             {

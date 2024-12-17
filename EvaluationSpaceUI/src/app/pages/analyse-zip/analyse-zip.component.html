@@ -22,8 +22,9 @@
           <div class="col">
             <mat-form-field class="full-width">
               <mat-select formControlName="language" placeholder="Language" class="full-width">
-                <mat-option *ngFor="let language of allLanguages" [value]="language">
-                  {{language}}</mat-option>
+                <mat-option *ngFor="let language of allLanguages" [value]="language.value">
+                  {{ language.label }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -34,5 +35,12 @@
     <button class="btn btn-primary row" color="primary" type="submit" mat-raised-button [disabled]="!selectedFile || !analysisForm.valid" (click)="analyseSubmissions()">
       <span>Analyse submissions</span>
     </button>
+  </div>
+  <div class="results">
+    <mat-card class="col-4 example-card" style="font-size: 17px" *ngFor="let file of analysedFiles">
+      <h3>Left File Name: {{ file.leftFileName }}</h3>
+      <h3>Right File Name: {{ file.rightFileName }}</h3>
+      <p>Similarity: {{ file.similarity }}%</p>
+    </mat-card>
   </div>
 </div>
